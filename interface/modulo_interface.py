@@ -267,19 +267,6 @@ class Interface:
             a { color: #22d3ee; }
             a:hover { color: #7dd3fc; }
             .stDivider { opacity: 0.5; }
-            .progress-wrap {
-                width: 100%;
-                background: rgba(255,255,255,0.06);
-                border-radius: 999px;
-                overflow: hidden;
-                border: 1px solid rgba(255,255,255,0.08);
-                height: 10px;
-            }
-            .progress-bar {
-                display: block;
-                height: 10px;
-                background: linear-gradient(90deg, #22d3ee, #7c3aed);
-            }
             </style>
             """,
             unsafe_allow_html=True,
