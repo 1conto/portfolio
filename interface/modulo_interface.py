@@ -1,3 +1,6 @@
+import base64
+from pathlib import Path
+
 import streamlit as st
 from modulos.projetos import Projetos, ProjetosManager
 
@@ -79,8 +82,25 @@ class Interface:
             "Git",
         ]
 
+        info_col, hero_col = st.columns([1, 2], gap="large")
+        with info_col:
+            foto_html = self._foto_perfil_html() or ""
+            contatos_html = "".join(
+                f"<li><a href='{link}' target='_blank'>{label}</a></li>" for label, link in contatos.items()
+            )
+            bloco_contato = (
+                "<div class=\"glass\">"
+                f"{foto_html}"
+                "<p style=\"margin:0; opacity:0.7; font-size:0.9rem;\">Contato rápido</p>"
+                f"<ul style=\"padding-left:18px; margin-top:6px; line-height:1.6;\">{contatos_html}</ul>"
+                "<p style=\"margin:4px 0 0 0; opacity:0.7; font-size:0.9rem;\">Localização</p>"
+                "<p style=\"margin:2px 0 0 0;\">Brasil · Disponível para remoto</p>"
+                "</div>" 
+            )
+
+            st.markdown(bloco_contato, unsafe_allow_html=True)
+
         # Hero
-        hero_col, info_col = st.columns([2, 1], gap="large")
         with hero_col:
             st.markdown(
                 f"""
@@ -91,23 +111,6 @@ class Interface:
                     <p style="line-height:1.7;">
                         Atuo end-to-end: arquitetura, implementação, integrações e métricas.
                     </p>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        with info_col:
-            contatos_html = "".join(
-                [f"<li><a href='{link}' target='_blank'>{label}</a></li>" for label, link in contatos.items()]
-            )
-            st.markdown(
-                f"""
-                <div class="glass">
-                    <p style="margin:0; opacity:0.7; font-size:0.9rem;">Contato rápido</p>
-                    <ul style="padding-left:18px; margin-top:6px; line-height:1.6;">
-                        {contatos_html}
-                    </ul>
-                    <p style="margin:4px 0 0 0; opacity:0.7; font-size:0.9rem;">Localização</p>
-                    <p style="margin:2px 0 0 0;">Brasil · Disponível para remoto</p>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -229,46 +232,23 @@ class Interface:
 
     # ---------- Utilidades ----------
     def _inject_style(self):
-        st.markdown(
-            """
-            <style>
-            @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap');
+        css_path = Path("interface/styles.css")
+        if css_path.exists():
+            css = css_path.read_text(encoding="utf-8")
+            st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+        else:
+            st.warning("Arquivo de estilo não encontrado (interface/styles.css).")
 
-            .stApp {
-                background: radial-gradient(circle at 18% 22%, rgba(99,102,241,0.18), transparent 25%),
-                            radial-gradient(circle at 82% 8%, rgba(16,185,129,0.16), transparent 28%),
-                            linear-gradient(140deg, #0b1020 0%, #0f172a 35%, #0b1020 100%);
-                color: #e7eefc;
-                font-family: 'Space Grotesk', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            }
-            .glass {
-                background: rgba(255, 255, 255, 0.04);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 16px;
-                padding: 16px 18px;
-                box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-                backdrop-filter: blur(14px);
-            }
-            .headline {
-                font-weight: 600;
-                letter-spacing: -0.02em;
-            }
-            div.stButton > button {
-                background: linear-gradient(145deg, #111827, #0b1328) !important;
-                border: 1px solid rgba(255,255,255,0.18) !important;
-                color: #e7eefc !important;
-                border-radius: 12px;
-                box-shadow: 0 10px 22px rgba(0,0,0,0.35);
-            }
-            div.stButton > button:hover {
-                border-color: #22d3ee !important;
-                transform: translateY(-1px);
-            }
-            a { color: #22d3ee; }
-            a:hover { color: #7dd3fc; }
-            .stDivider { opacity: 0.5; }
-            </style>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.session_state._style_injected = True
+    def _foto_perfil_html(self) -> str | None:
+        path = Path("imagens/minha_foto.png")
+        if not path.exists():
+            return None
+        try:
+            encoded = base64.b64encode(path.read_bytes()).decode("utf-8")
+        except Exception:
+            return None
+        return f"""
+            <div class="profile-frame">
+                <img src="data:image/png;base64,{encoded}" alt="Foto de perfil">
+            </div>
+        """
