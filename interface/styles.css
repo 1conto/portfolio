@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap');
+
+.stApp {
+    background: radial-gradient(circle at 18% 22%, rgba(99,102,241,0.18), transparent 25%),
+                radial-gradient(circle at 82% 8%, rgba(16,185,129,0.16), transparent 28%),
+                linear-gradient(140deg, #0b1020 0%, #0f172a 35%, #0b1020 100%);
+    color: #e7eefc;
+    font-family: 'Space Grotesk', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 16px 18px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    backdrop-filter: blur(14px);
+}
+
+.headline {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+div.stButton > button {
+    background: linear-gradient(145deg, #111827, #0b1328) !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    color: #e7eefc !important;
+    border-radius: 12px;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+}
+div.stButton > button:hover {
+    border-color: #22d3ee !important;
+    transform: translateY(-1px);
+}
+
+a { color: #22d3ee; }
+a:hover { color: #7dd3fc; }
+.stDivider { opacity: 0.5; }
+
+.progress-wrap {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    height: 10px;
+}
+.progress-bar {
+    display: block;
+    height: 10px;
+    background: linear-gradient(90deg, #22d3ee, #7c3aed);
+}
+
+.profile-card {
+    text-align: center;
+    padding: 8px 10px;
+}
+.profile-frame {
+    width: 140px;      /* tamanho final visível */
+    height: 140px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+    filter: drop-shadow(0 12px 22px rgba(0,0,0,0.35));
+}
+.profile-frame img {
+    width: 100px;      /* tamanho original (ajuste conforme sua imagem) */
+    height: 100px;
+    transform: scale(2.5);   /* zoom para caber 40px em 100px */
+    transform-origin: center;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    translate: -50% -50%;
+    object-fit: cover;
+    border-radius: 50%;
+    background: transparent;
+    mix-blend-mode: multiply; /* suaviza fundo claro */
+}
