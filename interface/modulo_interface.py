@@ -155,9 +155,6 @@ class Interface:
                         <p style="margin:0 0 12px 0;">
                             <a href="{projeto._link}" target="_blank">Abrir repositório</a>
                         </p>
-                        <div class="progress-wrap">
-                            <span class="progress-bar" style="width: 90%;"></span>
-                        </div>
                     </div>
                     """,
                     unsafe_allow_html=True,
