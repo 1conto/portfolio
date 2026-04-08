@@ -2,11 +2,12 @@ from typing import List, Iterable, Optional
 
 
 class Projetos:
-    def __init__(self, nome: str, categoria: str, link_repositorio: str, destaque:bool = False):
+    def __init__(self, nome: str, categoria: str, link_repositorio: str, main_stack:str = None, destaque:bool = False):
         self._nome = nome
         self._link = link_repositorio
         self.categoria = categoria
         self.destaque = destaque
+        self.main_stack = main_stack
 
     #def show_project(self, funcao_show: function):
     #    funcao_show()
